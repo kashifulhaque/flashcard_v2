@@ -1,0 +1,40 @@
+{
+    "set_names": {
+        "1": "SnK",
+        "2": "AoT"
+    },
+    "set_cards": {
+        "1": [1, 2, 3],
+        "2": [4, 5, 6, 7]
+    },
+    "cards": {
+        "1": {
+            "0": "Armin",
+            "1": "Colossal Titan"
+        },
+        "2": {
+            "0": "Armin",
+            "1": "Colossal Titan"
+        },
+        "3": {
+            "0": "Annie",
+            "1": "Female Titan"
+        },
+        "4": {
+            "0": "Eren",
+            "1": "Attack Titan"
+        },
+        "5": {
+            "0": "Eren",
+            "1": "Founding Titan"
+        },
+        "6": {
+            "0": "Eren",
+            "1": "Warhammer Titan"
+        },
+        "7": {
+            "0": "Zeke",
+            "1": "Beast Titan"
+        }
+    }
+}

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import CreateSetView from '../views/CreateSetView.vue'
+import ShowAllSetsView from '../views/ShowAllSetsView.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/create',
     name: 'create',
     component: CreateSetView
+  },
+  {
+    path: '/show-all',
+    name: 'show-all',
+    component: ShowAllSetsView
   }
 ]
 

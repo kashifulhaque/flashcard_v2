@@ -1,14 +1,20 @@
 <template>
-  <div class="create flex flex-col">
+  <div class="create flex flex-col" :class="{ shake: animate }">
     <div class="flex flex-row">
       <h1 class="text-white text-4xl font-bold cabin-font m-2 basis-4/5">
         Create a new Set
       </h1>
       <button
-        class="basis-1/5 text-white font-medium rounded-md text-md m-1 text-center dark:bg-green-600 dark:hover:bg-green-700"
+        class="basis-1/5 text-white font-medium rounded-md text-md m-1 text-center dark:bg-green-600 dark:hover:bg-green-700 font-medium poppins-font"
         @click="saveSet"
       >
         SAVE
+      </button>
+      <button
+        class="basis-1/5 text-white font-medium rounded-md text-md m-1 text-center dark:bg-red-600 dark:hover:bg-red-700 font-medium poppins-font"
+        @click="goBack"
+      >
+        CANCEL
       </button>
     </div>
     <label for="setname" class="text-white font-medium text-xl m-2"
@@ -27,16 +33,16 @@
     >
     <div class="flex flex-row justify-center">
       <button
-        class="rounded-full bg-blue-700 p-3 text-blue-100 font-medium text-xl mb-4 mx-2 basis-1/4"
+        class="rounded-full bg-blue-700 p-2 text-blue-100 font-medium text-2xl mb-4 mx-2 basis-1/6 font-medium"
         @click="addComponent"
       >
-        + new card
+        +
       </button>
       <button
-        class="rounded-full bg-red-600 p-3 text-blue-100 font-medium text-xl mb-4 mx-2 basis-1/4"
+        class="rounded-full bg-red-600 p-2 text-blue-100 font-medium text-2xl mb-4 mx-2 basis-1/6 font-medium"
         @click="removeComponent"
       >
-        - remove card
+        -
       </button>
     </div>
     <table id="setCards">
@@ -69,6 +75,7 @@ export default {
       setname: "",
       componentArray: [],
       componentDataArray: [],
+      animate: false
     };
   },
   methods: {
@@ -93,6 +100,10 @@ export default {
       this.componentDataArray[i][card] = cardContent;
     },
     async saveSet() {
+      if(this.setname == "" || this.componentArray.length == 0 || this.componentDataArray.length == 0) {
+        this.shakeComponent();
+        return;
+      }
       console.log(this.componentDataArray);
       try {
         const payload = {
@@ -101,10 +112,22 @@ export default {
           user_email: localStorage.email
         }
         const { data } = await axios.post("http://localhost:5000/save_set", payload);
-        console.log(data);
+        if(data === 'done') {
+          this.$router.push('dashboard')
+        }
       } catch(e) {
         console.error(e);
       }
+    },
+    goBack() {
+      this.$router.push('dashboard')
+    },
+    shakeComponent() {
+      // Animate vue component: https://codepen.io/aut0maat10/pen/ExaNZNo
+      this.animate = true;
+      setTimeout(() => {
+        this.animate = false;
+      }, 1000);
     }
   },
   components: {
@@ -123,6 +146,11 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Cabin:wght@600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+
+.poppins-font {
+  font-family: "Poppins", sans-serif;
+}
 
 .cabin-font {
   font-family: "Cabin", sans-serif;
@@ -130,5 +158,30 @@ export default {
 
 .montserrat-font {
   font-family: "Montserrat", sans-serif;
+}
+
+.shake {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 </style>

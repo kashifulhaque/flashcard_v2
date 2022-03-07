@@ -142,3 +142,37 @@ def save_set():
         i += 1
 
     return 'done', 200
+
+@app.route('/fetch_sets', methods=['POST'])
+def fetch_sets():
+    record = json.loads(request.data)
+    email = record['email']
+
+    user = Users.query.filter_by(email=email).first()
+    sets = Sets.query.filter_by(user_id=user.user_id)
+
+    data = {}
+    set_names = {}
+    set_cards = {}
+    all_cards = {}
+
+    for set in sets:
+        set_names[set.set_id] = set.name
+        cards = Cards.query.filter_by(set_id=set.set_id)
+        set_cards[set.set_id] = []
+
+        for card in cards:
+            card_with_sides = {}
+            set_cards[set.set_id].append(card.card_id)
+            sides = Sides.query.filter_by(card_id=card.card_id)
+
+            for side in sides:
+                card_with_sides[side.side_order] = side.content
+            
+            all_cards[card.card_id] = card_with_sides
+    
+    data['set_names'] = set_names
+    data['set_cards'] = set_cards
+    data['cards'] = all_cards
+    json_obj = json.dumps(data, indent=4)
+    return jsonify(json_obj);

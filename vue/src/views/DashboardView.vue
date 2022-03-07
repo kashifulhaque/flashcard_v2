@@ -3,9 +3,15 @@
     <div class="flex flex-row place-content-center content-center">
       <button
         @click="redirectCreateNewSet"
-        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 mb-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 poppins-font"
+        class="w-full text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-md px-5 py-2.5 mb-4 mx-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 poppins-font"
       >
         CREATE A NEW SET
+      </button>
+      <button
+        @click="redirectViewAllSets"
+        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 mb-4 mx-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 poppins-font"
+      >
+        VIEW ALL SETS
       </button>
     </div>
     <h1 class="text-white">Dashboard {{ email }}</h1>
@@ -41,6 +47,9 @@ export default {
       this.$store.commit('setUserID', this.user_id);
       this.$router.push("create");
     },
+    redirectViewAllSets() {
+      this.$router.push('show-all')
+    }
   },
   components: {},
   async created() {
@@ -55,7 +64,8 @@ export default {
   watch: {
     user_id: function (newUserId, oldUserId) {
       if (newUserId != oldUserId) {
-        console.log("New User ID fetched");
+        console.log(`New User ID: ${newUserId}`);
+        console.log(`Previous User ID: ${oldUserId}`);
       }
     },
   },
