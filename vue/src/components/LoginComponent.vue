@@ -85,7 +85,7 @@ export default {
             email: this.email,
             password: this.password,
           });
-          
+
           if(data === 'Login success') {
             // Store the email in localStorage, to mark the user as logged in
             // Redirect the user to the dashboard

@@ -1,13 +1,17 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     showLogout: false,
-    userEmail: '',
-    userID: -1
+    userEmail: "",
+    userID: -1,
+    setTitle: "",
+    setID: "",
+    cardIDs: [],
+    allSides: [],
   },
   getters: {},
   mutations: {
@@ -19,8 +23,20 @@ export default new Vuex.Store({
     },
     setUserID(state, id) {
       state.userID = id;
+    },
+    changeSetTitle(state, title) {
+      state.setTitle = title;
+    },
+    changeSetID(state, id) {
+      state.setID = id;
+    },
+    changeCardID(state, id) {
+      state.cardIDs = id;
+    },
+    changeAllSides(state, sides) {
+      state.allSides = sides;
     }
   },
   actions: {},
-  modules: {}
-})
+  modules: {},
+});

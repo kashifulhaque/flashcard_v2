@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import CreateSetView from '../views/CreateSetView.vue'
 import ShowAllSetsView from '../views/ShowAllSetsView.vue'
+import ReadCardView from '../views/ReadCardView.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/show-all',
     name: 'show-all',
     component: ShowAllSetsView
+  },
+  {
+    path: '/read-card',
+    name: 'read-card',
+    component: ReadCardView
   }
 ]
 
