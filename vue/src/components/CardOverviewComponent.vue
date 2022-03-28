@@ -12,28 +12,28 @@
     </p>
 
     <button
-      class="w-1/4 mt-4 text-white font-medium rounded-md text-md p-2 text-center dark:bg-green-600 dark:hover:bg-green-700 font-medium poppins-font"
+      class="w-1/5 mt-4 text-white font-medium rounded-md text-md p-2 text-center dark:bg-green-600 dark:hover:bg-green-700 font-medium poppins-font"
       @click="readSet"
     >
       READ 📖
     </button>
 
     <button
-      class="w-1/4 mt-4 ml-2 text-white font-medium rounded-md text-md p-2 text-center dark:bg-black dark:hover:bg-gray-700 font-medium poppins-font"
+      class="w-1/5 mt-4 ml-2 text-white font-medium rounded-md text-md p-2 text-center dark:bg-black dark:hover:bg-gray-700 font-medium poppins-font"
       @click="exportJSON"
     >
       EXPORT (JSON) 📎
     </button>
 
     <button
-      class="w-1/4 mt-4 ml-2 text-white font-medium rounded-md text-md p-2 text-center dark:bg-black dark:hover:bg-gray-700 font-medium poppins-font"
+      class="w-1/5 mt-4 ml-2 text-white font-medium rounded-md text-md p-2 text-center dark:bg-black dark:hover:bg-gray-700 font-medium poppins-font"
       @click="exportCSV"
     >
       EXPORT (CSV) 📎
     </button>
 
     <button
-      class="w-1/4 mt-4 text-white font-medium rounded-md text-md p-2 text-center dark:bg-red-800 dark:hover:bg-red-500 font-medium poppins-font"
+      class="w-1/5 mt-4 ml-2 text-white font-medium rounded-md text-md p-2 text-center dark:bg-red-800 dark:hover:bg-red-500 font-medium poppins-font"
       @click="deleteSet(set_id)"
     >
       DELETE 🗑
