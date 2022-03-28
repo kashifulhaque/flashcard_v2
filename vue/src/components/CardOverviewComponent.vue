@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card-overview p-6 mt-2 mb-2 max-w-lg bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-600 dark:border-gray-700"
+    class="card-overview p-6 mt-2 mb-2 w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-600 dark:border-gray-700"
   >
     <p class="mb-2 text-7xl font-normal tracking-tight dark:text-gray-500">
       #{{ idx + 1 }}
@@ -12,22 +12,38 @@
     </p>
 
     <button
-      class="w-1/3 mt-4 mr-2 text-white font-medium rounded-md text-md p-2 text-center dark:bg-green-600 dark:hover:bg-green-700 font-medium poppins-font"
+      class="w-1/4 mt-4 text-white font-medium rounded-md text-md p-2 text-center dark:bg-green-600 dark:hover:bg-green-700 font-medium poppins-font"
       @click="readSet"
     >
       READ 📖
     </button>
 
     <button
-      class="w-1/3 mt-4 ml-2 text-white font-medium rounded-md text-md p-2 text-center dark:bg-black dark:hover:bg-gray-700 font-medium poppins-font"
+      class="w-1/4 mt-4 ml-2 text-white font-medium rounded-md text-md p-2 text-center dark:bg-black dark:hover:bg-gray-700 font-medium poppins-font"
       @click="exportJSON"
     >
-      Export 📎
+      EXPORT (JSON) 📎
+    </button>
+
+    <button
+      class="w-1/4 mt-4 ml-2 text-white font-medium rounded-md text-md p-2 text-center dark:bg-black dark:hover:bg-gray-700 font-medium poppins-font"
+      @click="exportCSV"
+    >
+      EXPORT (CSV) 📎
+    </button>
+
+    <button
+      class="w-1/4 mt-4 text-white font-medium rounded-md text-md p-2 text-center dark:bg-red-800 dark:hover:bg-red-500 font-medium poppins-font"
+      @click="deleteSet(set_id)"
+    >
+      DELETE 🗑
     </button>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "CardOverviewComponent",
   data() {
@@ -56,9 +72,60 @@ export default {
       a.href = window.URL.createObjectURL(blob);
       a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
 
-      e.initEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      e.initEvent(
+        "click",
+        true,
+        false,
+        window,
+        0,
+        0,
+        0,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
       a.dispatchEvent(e);
-    }
+    },
+    exportCSV() {
+      var array = typeof this.allSides != "object" ? JSON.parse(this.allSides) : this.allSides;
+      var str = "";
+
+      for (var i = 0; i < array.length; i++) {
+        var line = "";
+        for (var index in array[i]) {
+          if (line != "") line += ",";
+
+          line += array[i][index];
+        }
+
+        str += line + "\r\n";
+      }
+
+      console.log(str);
+      var downloadLink = document.createElement("a");
+      var blob = new Blob(["\ufeff", str]);
+      var url = URL.createObjectURL(blob);
+      downloadLink.href = url;
+      downloadLink.download = 'export.csv';
+
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    },
+    async deleteSet(setID) {
+      const { data } = await axios.post("http://localhost:5000/delete_set", {
+        email: localStorage.email,
+        set_id: setID,
+      });
+      if (data == "Delete") {
+        this.$emit("deleteSet", setID);
+      }
+    },
   },
   props: ["set_title", "set_id", "card_ids", "sides", "idx"],
   created() {

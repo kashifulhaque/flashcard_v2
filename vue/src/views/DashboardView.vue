@@ -1,9 +1,12 @@
 <template>
   <div class="dashboard">
+    <p class="text-gray-400 text-xl font-medium px-4" v-if="user_id != ''">User ID: <span class="text-xl text-white">{{ user_id }}</span></p>
     <p class="text-gray-400 text-xl font-medium px-4">
-      Welcome, <span class="text-white text-3xl italic">{{ email }}</span>
+      Username: <span class="text-white text-3xl">{{ email.substring(0, email.indexOf('@')) }}</span>
     </p>
-    <p class="text-gray-300 text-sm italic px-4" v-if="user_id != ''">User ID: {{ user_id }}</p>
+    <p class="text-gray-400 text-xl font-medium px-4">
+      Email ID: <span class="text-white text-3xl">{{ email }}</span>
+    </p>
     <div class="flex flex-row place-content-center content-center mt-4">
       <button
         @click="redirectCreateNewSet"

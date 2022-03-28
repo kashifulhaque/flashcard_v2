@@ -1,8 +1,8 @@
 <template>
   <div class="create flex flex-col" :class="{ shake: animate }">
     <div class="flex flex-row">
-      <h1 class="text-white text-4xl font-bold cabin-font m-2 basis-4/5">
-        Create a new Set
+      <h1 class="text-yellow-400 text-5xl font-bold cabin-font m-2 basis-4/5">
+        Build a set
       </h1>
       <button
         class="basis-1/5 text-white font-medium rounded-md text-md m-1 text-center dark:bg-green-600 dark:hover:bg-green-700 font-medium poppins-font"
@@ -17,7 +17,7 @@
         CANCEL
       </button>
     </div>
-    <label for="setname" class="text-white font-medium text-xl m-2"
+    <label for="setname" class="text-white font-medium text-2xl m-2"
       >Set name:</label
     >
     <input
@@ -28,12 +28,12 @@
       class="mx-2 mb-2 h-12 p-2 montserrat-font"
       placeholder="Set name goes here ..."
     />
-    <label for="cardinfo" class="text-white font-medium text-md m-2"
+    <label for="cardinfo" class="text-white font-medium text-xl m-2"
       >Card information:</label
     >
     <div class="flex flex-row justify-center">
       <button
-        class="rounded-full bg-blue-700 p-2 text-blue-100 font-medium text-2xl mb-4 mx-2 basis-1/6 font-medium"
+        class="rounded-full bg-blue-700 p-2 text-blue-100 font-medium text-2xl mb-4 mx-2 basis-1/6  font-medium"
         @click="addComponent"
       >
         +
@@ -48,10 +48,10 @@
     <table id="setCards">
       <tr>
         <th>
-          <p class="text-white text-xl">Side A</p>
+          <p class="text-white text-2xl">Side A</p>
         </th>
         <th>
-          <p class="text-white text-xl">Side B</p>
+          <p class="text-white text-2xl">Side B</p>
         </th>
       </tr>
       <CardContentComponent
@@ -97,15 +97,24 @@ export default {
     },
     gotCardData(e, i) {
       const { card, cardContent } = e;
-      this.componentDataArray[i][card] = cardContent;
+      if(cardContent != '') {
+        console.log(cardContent);
+        this.componentDataArray[i][card] = cardContent;
+      }
     },
     async saveSet() {
       if(this.setname == "" || this.componentArray.length == 0 || this.componentDataArray.length == 0) {
         this.shakeComponent();
         return;
       }
-      console.log(this.componentDataArray);
       try {
+        for(let i = 0; i < this.componentDataArray.length; ++i) {
+          const { cardA, cardB } = this.componentDataArray[i];
+          if(cardA == '' || cardB == '') {
+            this.shakeComponent();
+            return;
+          }
+        }
         const payload = {
           setname: this.setname,
           data: this.componentDataArray,

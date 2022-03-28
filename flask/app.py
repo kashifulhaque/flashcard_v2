@@ -107,7 +107,7 @@ def save_set():
     
     user = Users.query.filter_by(email=user_email).first()
 
-    all_sets = len(Sets.query.all()) + 1
+    all_sets = len(Sets.query.all()) * 2
 
     new_set = Sets(set_id=all_sets, name=setname, user_id=user.user_id)
 
@@ -117,7 +117,7 @@ def save_set():
     cards = []
     card_ids = []
     for d in data:
-        all_cards = len(Cards.query.all()) + 1
+        all_cards = len(Cards.query.all()) * 2
         new_card = Cards(card_id=all_cards, set_id=new_set.set_id)
         cards.append(d)
         card_ids.append(all_cards)
@@ -176,3 +176,30 @@ def fetch_sets():
     data['cards'] = all_cards
     json_obj = json.dumps(data, indent=4)
     return jsonify(json_obj);
+
+@app.route('/delete_set', methods=['POST'])
+def delete_set():
+    record = json.loads(request.data)
+    email = record['email']
+    set_id_to_delete = int(record['set_id'])
+    print(f'ID to delete: {type(set_id_to_delete)}')
+    
+    user = Users.query.filter_by(email=email).first()
+    sets = Sets.query.filter_by(user_id=user.user_id)
+
+    found = False
+    for set in sets:
+        print(set.set_id)
+        if set_id_to_delete == set.set_id:
+            found = True
+            Sets.query.filter_by(set_id=set.set_id).delete()
+            cards = Cards.query.filter_by(set_id=set_id_to_delete)
+
+            for card in cards:
+                Cards.query.filter_by(set_id=set_id_to_delete).delete()
+
+    if found:
+        db.session.commit()
+        return 'Delete', 200
+    if not found:
+        return 'Set does not exist', 200

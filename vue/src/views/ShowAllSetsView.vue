@@ -10,6 +10,7 @@
         v-bind:card_ids="card['card_ids']"
         v-bind:sides="card['sides']"
         v-bind:idx="index"
+        @deleteSet="setIdToDelete = $event"
       />
     </div>
     <div v-else class="text-white font-medium text-2xl">
@@ -30,6 +31,7 @@ export default {
   data() {
     return {
       email: "",
+      setIdToDelete: '',
       cards: {},
       set_cards: {},
       set_names: {},
@@ -71,7 +73,17 @@ export default {
       }
     }
   },
-  watch: {},
+  watch: {
+    setIdToDelete: function(id) {
+      console.log(`ID: ${id}`);
+      for(const i in this.card_package) {
+        if(this.card_package[i].set_id == id) {
+          console.log(this.card_package[i]);
+          this.card_package.splice(i, 1);
+        }
+      }
+    }
+  },
 };
 </script>
 
