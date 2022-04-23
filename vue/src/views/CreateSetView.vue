@@ -98,7 +98,6 @@ export default {
     gotCardData(e, i) {
       const { card, cardContent } = e;
       if(cardContent != '') {
-        console.log(cardContent);
         this.componentDataArray[i][card] = cardContent;
       }
     },

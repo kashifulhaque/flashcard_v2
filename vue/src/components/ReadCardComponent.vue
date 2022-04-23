@@ -14,7 +14,6 @@ export default {
   },
   props: ['sides'],
   mounted() {
-    console.log(this.$props);
   }
 };
 </script>

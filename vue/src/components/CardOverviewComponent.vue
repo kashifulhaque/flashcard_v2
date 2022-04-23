@@ -106,7 +106,6 @@ export default {
         str += line + "\r\n";
       }
 
-      console.log(str);
       var downloadLink = document.createElement("a");
       var blob = new Blob(["\ufeff", str]);
       var url = URL.createObjectURL(blob);

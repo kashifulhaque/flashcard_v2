@@ -110,6 +110,7 @@ def save_set():
     all_sets = len(Sets.query.all()) * 2
 
     new_set = Sets(set_id=all_sets, name=setname, user_id=user.user_id)
+    # new_set = Sets(name=setname, user_id=user.user_id)
 
     db.session.add(new_set)
     db.session.commit()
@@ -123,7 +124,7 @@ def save_set():
         card_ids.append(all_cards)
 
         db.session.add(new_card)
-        db.session.commit()
+    db.session.commit()
     
     i = 0
     for card in cards:

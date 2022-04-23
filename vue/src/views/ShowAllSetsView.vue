@@ -75,10 +75,8 @@ export default {
   },
   watch: {
     setIdToDelete: function(id) {
-      console.log(`ID: ${id}`);
       for(const i in this.card_package) {
         if(this.card_package[i].set_id == id) {
-          console.log(this.card_package[i]);
           this.card_package.splice(i, 1);
         }
       }

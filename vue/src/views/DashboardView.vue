@@ -47,7 +47,6 @@ export default {
       const { data } = await axios.post("http://localhost:5000/get_sets", {
         id: this.user_id,
       });
-      console.log(data);
     },
     redirectCreateNewSet() {
       this.$store.commit("setUserID", this.user_id);
